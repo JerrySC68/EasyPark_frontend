@@ -1,4 +1,3 @@
-// Nuevo código para incluir modal de búsqueda y actualización de mapa
 import React, { useEffect, useState, useRef } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../assets/css/MapPage.css';
@@ -11,12 +10,10 @@ export const MapPage = () => {
   const [nearbyParkings, setNearbyParkings] = useState([]);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [formData, setFormData] = useState({
-    location: '',
-    arrivalDate: '',
-    arrivalTime: '',
-    departureDate: '',
-    departureTime: ''
+    origin: '',
+    destination: ''
   });
+  const [userModifiedOrigin, setUserModifiedOrigin] = useState(false);
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const directionsRenderer = useRef(null);
@@ -29,13 +26,12 @@ export const MapPage = () => {
     }
 
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
+      (position) => {
         const location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
         setUserLocation(location);
-        await getLocationInfo(location);
       },
       (err) => {
         console.error("Error de geolocalización:", err);
@@ -46,6 +42,12 @@ export const MapPage = () => {
     );
   }, []);
 
+  useEffect(() => {
+    if (userLocation) {
+      getLocationInfo(userLocation);
+    }
+  }, [userLocation]);
+
   const getLocationInfo = async (location) => {
     if (!window.google || !window.google.maps) return;
 
@@ -53,23 +55,41 @@ export const MapPage = () => {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ location }, (results, status) => {
         if (status === 'OK' && results[0]) {
-          let city = '';
+          const formatted = results[0].formatted_address;
+          if (!userModifiedOrigin) {
+            setFormData((prev) => ({ ...prev, origin: formatted }));
+          }
+
+          let district = '';
           let province = '';
 
           for (const component of results[0].address_components) {
-            if (component.types.includes('locality')) {
-              city = component.long_name;
+            if (component.types.includes('sublocality') || component.types.includes('administrative_area_level_2')) {
+              district = component.long_name;
             }
             if (component.types.includes('administrative_area_level_1')) {
               province = component.long_name;
             }
           }
 
-          setLocationInfo(`${city}, ${province}`);
+          if (district || province) {
+            setLocationInfo(`${district}${district && province ? ', ' : ''}${province}`);
+          } else {
+            setLocationInfo('Ubicación desconocida');
+          }
+        } else {
+          if (!userModifiedOrigin) {
+            setFormData((prev) => ({ ...prev, origin: 'Ubicación desconocida' }));
+          }
+          setLocationInfo('Ubicación desconocida');
         }
       });
     } catch (err) {
       console.error("Error en geocodificación inversa:", err);
+      if (!userModifiedOrigin) {
+        setFormData((prev) => ({ ...prev, origin: 'Ubicación desconocida' }));
+      }
+      setLocationInfo('Ubicación desconocida');
     }
   };
 
@@ -103,6 +123,9 @@ export const MapPage = () => {
         });
 
         setLoading(false);
+
+        findNearbyParkings();
+
       } catch (err) {
         console.error("Error al inicializar el mapa:", err);
         setError("Error al cargar el mapa. Recarga la página.");
@@ -133,21 +156,21 @@ export const MapPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "origin") setUserModifiedOrigin(true);
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchQuery(formData.location);
     handleSearch();
   };
 
   const handleSearch = () => {
-    if (!searchQuery || !mapInstance.current) return;
+    if (!formData.destination || !mapInstance.current) return;
 
     const service = new window.google.maps.places.PlacesService(mapInstance.current);
     const request = {
-      query: searchQuery,
+      query: formData.destination,
       fields: ['name', 'geometry']
     };
 
@@ -163,7 +186,7 @@ export const MapPage = () => {
   };
 
   const findNearbyParkings = () => {
-    if (!userLocation || !window.google || !window.google.maps) return;
+    if (!userLocation || !window.google || !window.google.maps || !mapInstance.current) return;
 
     const service = new window.google.maps.places.PlacesService(mapInstance.current);
     const request = {
@@ -213,10 +236,6 @@ export const MapPage = () => {
     });
   };
 
-  useEffect(() => {
-    findNearbyParkings();
-  }, [userLocation]);
-
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -231,28 +250,27 @@ export const MapPage = () => {
 
   const focusOnParking = (parking) => {
     if (!mapInstance.current || !window.google || !userLocation) return;
-  
-    // Limpia la ruta anterior si existe
+
     if (directionsRenderer.current) {
       directionsRenderer.current.setMap(null);
       directionsRenderer.current = null;
     }
-  
+
     const directionsService = new window.google.maps.DirectionsService();
     directionsRenderer.current = new window.google.maps.DirectionsRenderer({
       map: mapInstance.current,
       suppressMarkers: false
     });
-  
+
     const origin = new window.google.maps.LatLng(userLocation.lat, userLocation.lng);
     const destination = new window.google.maps.LatLng(parking.location.lat, parking.location.lng);
-  
+
     const request = {
       origin,
       destination,
       travelMode: window.google.maps.TravelMode.DRIVING
     };
-  
+
     directionsService.route(request, (result, status) => {
       if (status === window.google.maps.DirectionsStatus.OK) {
         directionsRenderer.current.setDirections(result);
@@ -260,12 +278,10 @@ export const MapPage = () => {
         console.error("No se pudo obtener la ruta:", status);
       }
     });
-  
-    // También centramos el mapa en el destino
+
     mapInstance.current.setCenter(destination);
     mapInstance.current.setZoom(15);
   };
-  
 
   return (
     <div className="map-fullscreen-container">
@@ -294,46 +310,23 @@ export const MapPage = () => {
           <div className="reserve-wrapper">
             <form className="reserve-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="location">¿A dónde va?</label>
+                <label htmlFor="origin">¿Dónde está?</label>
                 <input
                   type="text"
-                  name="location"
-                  id="location"
-                  value={formData.location}
+                  name="origin"
+                  id="origin"
+                  value={formData.origin}
                   onChange={handleChange}
                   className="form-control"
                 />
               </div>
               <div className="form-group">
-                <label>Fecha y hora de llegada</label>
+                <label htmlFor="destination">¿A dónde va?</label>
                 <input
-                  type="date"
-                  name="arrivalDate"
-                  value={formData.arrivalDate}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                <input
-                  type="time"
-                  name="arrivalTime"
-                  value={formData.arrivalTime}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <label>Fecha y hora de salida</label>
-                <input
-                  type="date"
-                  name="departureDate"
-                  value={formData.departureDate}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-                <input
-                  type="time"
-                  name="departureTime"
-                  value={formData.departureTime}
+                  type="text"
+                  name="destination"
+                  id="destination"
+                  value={formData.destination}
                   onChange={handleChange}
                   className="form-control"
                 />
