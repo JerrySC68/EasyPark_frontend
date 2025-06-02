@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import foto from "../assets/img/ParqueFondo.png";
-
+import '../assets/css/Home.css';
 export const Home = () => {
+
+
+
   return (
-   <div className="container py-5 text-center">
+    <div className="container py-5 text-center ">
+      <div className="form-control">
         <div className="row justify-content-center align-items-center">
           <div className="col-lg-6 col-md-10 mb-4">
             <h1 className="fw-bold mb-3 display-5">Bienvenido a EasyPark</h1>
@@ -30,12 +34,13 @@ export const Home = () => {
             <img
               src={foto}
               alt="Ilustración de parqueo"
-              className="img-fluid rounded shadow-sm"
+              className="img img-fluid rounded shadow-sm"
               style={{ maxHeight: "400px", width: "100%", objectFit: "cover" }}
             />
           </div>
         </div>
       </div>
+    </div>
 
   );
 };
