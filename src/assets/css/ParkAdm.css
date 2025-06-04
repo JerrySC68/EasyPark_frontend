@@ -1,0 +1,85 @@
+.parking-bg {
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    
+}
+
+.content-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+
+
+.description {
+    font-size: 1.125rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.input-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input.form-control {
+    overflow: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+  }
+
+.add-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+.delete-btn {
+    background-color: #e53935;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c62828;
+}
+.selected-row {
+    background-color: #cce5ff;
+    font-weight: bold;
+}
+
+
+.form-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}

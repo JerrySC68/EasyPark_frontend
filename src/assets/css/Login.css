@@ -1,0 +1,60 @@
+.wrapper-login{
+    display: flex;
+    min-height: 90vh;
+    align-items: center;
+    
+
+}
+
+.wrapper-login .form {
+    border-radius: 20px 20px;
+    width: 350px;
+    border-color: black;
+    box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px 30px 30px;
+    border: solid 0.5px black;
+    background-color: #4f5f76;
+   
+}
+
+
+
+.wrapper-login .form .form-group  label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: black;
+    font: 1em sans-serif;
+    font-weight: 600;
+    margin: 10px;
+   
+}
+
+body {
+    background-image: linear-gradient(to bottom right, #0288D1, #03A9F4);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+
+.wrapper-login .form .form-group img{
+    width:200px;
+    display: block;/* Evita que se comporte como texto */
+    height: auto;/* Mantiene la proporción */
+    margin-left: 48px;
+}
+
+.wrapper-login .form .form-group input {
+    box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: solid 0.5px black;
+    
+   
+}
+
+.spanLog{
+    font-size: 30px;
+}
+

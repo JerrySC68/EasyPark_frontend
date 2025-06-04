@@ -1,0 +1,38 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebaseConfig"; // o donde esté tu config
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  if (formData.username && formData.password) {
+    setAlertCustom({
+      type: 'confirm',
+      message: '¿Está seguro que quiere ingresar?'
+    });
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.username,
+        formData.password
+      );
+
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+
+      console.log("🔥 UID:", user.uid);
+      console.log("🔐 Token:", token);
+
+      // Aquí podrías guardar el token localmente si vas a usarlo con el backend
+      localStorage.setItem("token", token);
+
+      // Redirigir o mostrar bienvenida
+    } catch (error) {
+      console.error("❌ Error de autenticación:", error.message);
+      setAlertCustom({ type: 'error', message: 'Credenciales inválidas' });
+    }
+
+  } else {
+    setAlertCustom({ type: 'error', message: 'Complete todos los campos' });
+  }
+};

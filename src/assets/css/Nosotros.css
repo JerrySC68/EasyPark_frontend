@@ -1,0 +1,66 @@
+/* Animaciones suaves para entrada */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.fade-in-delay {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fuente general más grande */
+.container {
+  font-size: 1.15rem; /* ~18px */
+  line-height: 1.7;
+}
+
+/* Títulos más grandes */
+h1.display-5 {
+  font-size: 2.75rem; /* ~44px */
+}
+
+h3.fw-bold {
+  font-size: 1.75rem; /* ~28px */
+}
+
+/* Listas y párrafos */
+p,
+li {
+  font-size: 1.15rem;
+}
+
+/* Imágenes con estilo moderno */
+img.img-fluid {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive: ajustar tamaños en móviles */
+@media (max-width: 768px) {
+  .container {
+    font-size: 1rem;
+  }
+
+  h1.display-5 {
+    font-size: 2rem;
+  }
+
+  h3.fw-bold {
+    font-size: 1.5rem;
+  }
+
+  p,
+  li {
+    font-size: 1rem;
+  }
+}

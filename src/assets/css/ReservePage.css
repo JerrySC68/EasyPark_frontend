@@ -1,0 +1,120 @@
+/*
+.reserve-page {
+  background-color: #0b0c2a;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('/public/stars-bg.png'); 
+  background-size: cover;
+}
+
+.reserve-form {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: black;
+}
+
+.reserve-form input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.date-time-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.date-time-group div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+button {
+  background-color: #ccc;
+  color: black;
+  font-weight: bold;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #a0a0a0;
+}
+*/
+
+body {
+    background-image: linear-gradient(to bottom right, #0288D1, #03A9F4);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+
+.reserve-wrapper {
+  display: flex;
+  min-height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.reserve-form {
+  border-radius: 20px;
+  width: 350px;
+  box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px 30px 30px;
+  border: solid 0.5px black;
+  background-color: #4f5f76;
+  color: black;
+}
+
+.reserve-form .form-group {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.reserve-form .form-group label {
+  color: black;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.reserve-form .form-group input {
+  box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: solid 0.5px black;
+  padding: 10px;
+}
+
+.reserve-form button {
+  margin-top: 1rem;
+  padding: 10px;
+  border: none;
+  background-color: #28b13a;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.reserve-form button:hover {
+  background-color: #21892e;
+}

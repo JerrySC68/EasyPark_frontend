@@ -1,0 +1,52 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+# Archivos de dependencias
+node_modules/
+dist/
+build/
+
+# Configuración de entorno
+.env
+.env.*.local
+
+# Archivos temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🛠 Archivos de herramientas
+.vscode/
+.idea/
+*.iml
+
+# Archivos de bloqueo de paquetes (opcional si no quieres controlar versiones exactas)
+package-lock.json
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

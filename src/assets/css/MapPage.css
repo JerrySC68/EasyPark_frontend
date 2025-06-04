@@ -1,0 +1,230 @@
+/* Estilos base */
+.map-fullscreen-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.map-fullscreen {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Overlay de carga */
+.map-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 1000;
+}
+
+/* Rectángulo de información de ubicación - Versión grande */
+.location-info-box {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+ background-color: #f8f9fa;    /* Fondo ligeramente gris */
+  border: 1px solid #dee2e6;    /* Borde sutil */
+  padding: 15px 20px;            /* Relleno interno aumentado */
+  border-radius: 10px;           /* Bordes más redondeados */
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  min-width: 350px;              /* Ancho mínimo aumentado */
+  max-width: 400px;              /* Ancho máximo aumentado */
+  transition: all 0.3s ease;     /* Transición suave para hover */
+}
+
+/* Efecto al pasar el mouse para mejor interactividad */
+.location-info-box:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.location-text {
+  margin-right: 15px;           /* Más espacio entre texto y botón */
+  font-size: 1.1rem;            /* Texto más grande (equivalente a ~17.6px) */
+  font-weight: 600;             /* Texto más negrita */
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Añade esto a tu MapPage.css */
+.search-button {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px; /* Tamaño adecuado para el emoji */
+  line-height: 1;
+}
+
+.search-button:hover {
+  background-color: #3367D6;
+}
+
+/* Botón de búsqueda más grande */
+.search-circle-button {
+  background-color: #4285F4;
+  border: none;
+  border-radius: 50%;
+  width: 40px;                  /* Ancho aumentado */
+  height: 40px;                 /* Altura aumentada */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  flex-shrink: 0;               /* Evita que se reduzca */
+}
+
+/* Efecto hover para el botón */
+.search-circle-button:hover {
+  background-color: #3367D6;
+  transform: scale(1.05);
+}
+
+/* Efecto al hacer clic */
+.search-circle-button:active {
+  transform: scale(0.95);
+}
+
+/* Mensajes de error */
+.alert-danger {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.alert .close {
+  margin-left: 5 px;
+  margin-top: 3%;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+
+/* Contenedor de la lista de parqueos */
+.parkings-list-container {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 300px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 15px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.parkings-list-title {
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Items de parqueos */
+.parking-item {
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.parking-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.parking-name {
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.parking-distance {
+  background-color: #4285F4;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.no-parkings {
+  text-align: center;
+  color: #666;
+  padding: 15px 0;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+  .parkings-list-container {
+    width: 250px;
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    max-height: 40vh;
+  }
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+

@@ -1,0 +1,129 @@
+.Layout-top{
+    display: flex;
+    min-height: 10vh;
+
+}
+
+.Layout-top nav{
+    background-color: #4f5f76;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: center;
+    width: 100vw;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Lo mantiene por encima de otros elementos */
+    position: fixed;
+
+}
+
+.Layout-top nav a{
+    color: white;
+    padding: 15px;
+    margin: 13px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.Layout-top nav a:hover{
+   background-color: #28b13a;
+}
+
+/*Apartado del logo en el top*/
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+
+
+
+.logo-img {
+  height: 40px;
+  width: auto;
+  margin-top: -4px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* semitransparente */
+  z-index: 998; /* asegúrate de que esté debajo del navbar (si este tiene z-index 999) */
+}
+
+
+
+.navbar-nav .nav-link:hover {
+  text-decoration: underline;
+}
+
+
+
+
+/*Apartado del footer*/
+.footer {
+    background-color: #f8f9fa; /* Color de fondo */
+    padding: 20px 0;
+    width: 100%;
+    position: fixed; /* Fijo en la parte inferior */
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    border-top: 1px solid #e0e0e0; /* Borde superior sutil */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.copyright {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px; /* Espacio entre íconos */
+}
+
+.social-icons a {
+    color: #333; /* Color de los íconos */
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: orange; /* Color al pasar el mouse */
+}
+
+main {
+    margin-top: 60px;    /* Altura del header */
+    margin-bottom: 60px; /* Altura del footer */
+    padding: 20px;       /* Espacio interno opcional */
+    min-height: calc(100vh - 120px); /* Ajusta la altura restante */
+}
