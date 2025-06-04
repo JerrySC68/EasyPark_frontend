@@ -57,12 +57,10 @@ button:hover {
 */
 
 body {
-    background-image: linear-gradient(to bottom right, #0288D1, #03A9F4);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+  background-color: #121212; /* asfalto más oscuro */
+  background-image: none;
+  color: white;
 }
-
 
 
 

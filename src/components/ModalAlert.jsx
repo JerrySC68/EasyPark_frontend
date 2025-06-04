@@ -1,5 +1,5 @@
 import '../assets/css/Modal.css';
-
+ 
 const Titles = {
   success: 'Éxito',
   error: 'Error',
@@ -7,7 +7,7 @@ const Titles = {
   confirm: 'Confirmar',
   cancel: 'Cancelar'
 };
-
+ 
 const Icons = {
   success: '✅',
   error: '❌',
@@ -15,10 +15,10 @@ const Icons = {
   confirm: '❓',
   cancel: '🚫'
 };
-
+ 
 export const Alert = ({ type, message, onClose }) => {
   if (!type || !message) return null;
-
+ 
   return (
     <div className="overlay">
       <div className="alert">
@@ -34,10 +34,10 @@ export const Alert = ({ type, message, onClose }) => {
     </div>
   );
 };
-
+ 
 export const Confirm = ({ type = 'confirm', message, onConfirm, onClose }) => {
   if (!message) return null;
-
+ 
   return (
     <div className="overlay">
       <div className="alert">

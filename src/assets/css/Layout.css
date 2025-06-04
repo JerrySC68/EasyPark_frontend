@@ -5,7 +5,7 @@
 }
 
 .Layout-top nav{
-    background-color: #4f5f76;
+    background-color: #2c2c2c;
     display: flex;
     justify-content: space-between;
     padding: 15px;
@@ -28,8 +28,9 @@
     transition: background 0.2s ease;
 }
 
-.Layout-top nav a:hover{
-   background-color: #28b13a;
+.Layout-top nav a:hover {
+   background-color: #ffd60a; /* amarillo tráfico */
+   color: black;
 }
 
 /*Apartado del logo en el top*/
