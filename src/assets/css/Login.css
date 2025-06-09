@@ -1,60 +1,149 @@
-.wrapper-login{
+/* Login.css */
+.Fondo {
     display: flex;
-    min-height: 90vh;
+    min-height: 50vh;
     align-items: center;
-    
-
-}
-
-.wrapper-login .form {
-    border-radius: 20px 20px;
-    width: 350px;
-    border-color: black;
-    box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px 30px 30px 30px;
-    border: solid 0.5px black;
-    background-color: #4f5f76;
-   
-}
-
-
-
-.wrapper-login .form .form-group  label {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    color: black;
-    font: 1em sans-serif;
-    font-weight: 600;
-    margin: 10px;
-   
-}
-
-body {
-    background-image: linear-gradient(to bottom right, #0288D1, #03A9F4);
-    background-repeat: no-repeat;
+    justify-content: center;
+    background: linear-gradient(135deg, #0288D1, #03A9F4, #4fc3f7);
     background-attachment: fixed;
-    background-size: cover;
+    padding: 20px;
 }
 
-
-
-
-.wrapper-login .form .form-group img{
-    width:200px;
-    display: block;/* Evita que se comporte como texto */
-    height: auto;/* Mantiene la proporción */
-    margin-left: 48px;
+.content-box {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 20px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.wrapper-login .form .form-group input {
-    box-shadow: 2.5px 5px 15px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: solid 0.5px black;
+.logo {
+    width: 180px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.spanLog {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: block;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 70%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #dfe6e9;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: white;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+    background-color: #f8f9fa;
+    border-color: #dfe6e9;
+    color: #7f8c8d;
+    transition: all 0.2s ease;
+}
+
+.input-group button:hover {
+    background-color: #e9ecef;
+    color: #3498db;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Animation for the form */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-box {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .content-box {
+        padding: 25px 20px;
+        margin: 0 15px;
+    }
     
-   
-}
-
-.spanLog{
-    font-size: 30px;
+    .spanLog {
+        font-size: 24px;
+    }
 }
 

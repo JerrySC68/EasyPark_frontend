@@ -1,12 +1,12 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../assets/css/Login.css';
 import { Alert, Confirm } from "../components/ModalAlert";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from '../config/firebaseConfig.js';
-import { Eye, EyeOff } from 'lucide-react'; // 👈 Importar íconos
+import { Eye, EyeOff } from 'lucide-react';
+import '../assets/css/Login.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -14,7 +14,8 @@ const auth = getAuth(app);
 export const Login = () => {
   const [alertCustom, setAlertCustom] = useState({ type: '', message: '' });
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [mostrar, setMostrar] = useState(false); // 👈 Estado para ver contraseña
+  const [mostrar, setMostrar] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,16 +27,17 @@ export const Login = () => {
     const { email, password } = formData;
 
     if (!email || !password) {
-      setAlertCustom({ type: 'error', message: 'Complete todos los campos' });
+      setAlertCustom({ type: 'error', message: 'Por favor complete todos los campos' });
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const token = await userCredential.user.getIdToken();
 
       localStorage.setItem('easypark_token', token);
-      
 
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login/login`, {
         method: 'POST',
@@ -46,7 +48,7 @@ export const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) throw new Error('No se pudo obtener información del usuario');
+      if (!response.ok) throw new Error('Error al obtener información del usuario');
       const usuario = await response.json();
 
       localStorage.setItem('rol', usuario.tipo_usuarios);
@@ -56,17 +58,24 @@ export const Login = () => {
       const rol = usuario.tipo_usuarios;
       if (rol === 'Admin' || rol === 'propietario' || rol === 'cliente') {
         setAlertCustom({ type: 'success', message: 'Inicio de sesión exitoso' });
-        navigate('/Bienvenida');
+        setTimeout(() => navigate('/Bienvenida'), 1500);
       } else if (rol === 'propietariop') {
         setAlertCustom({ type: 'success', message: 'Inicio de sesión exitoso' });
-        navigate('/Pendiente');
+        setTimeout(() => navigate('/Pendiente'), 1500);
       } else if (rol === 'propietarioNo') {
         setAlertCustom({ type: 'error', message: 'Cuenta no autorizada' });
       }
 
     } catch (error) {
-      console.error('❌ Error al iniciar sesión:', error.message);
-      setAlertCustom({ type: 'error', message: 'Credenciales inválidas o error en Firebase' });
+      console.error('Error al iniciar sesión:', error.message);
+      setAlertCustom({ 
+        type: 'error', 
+        message: error.message.includes('Firebase') 
+          ? 'Credenciales incorrectas' 
+          : 'Error en el servidor' 
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,65 +84,84 @@ export const Login = () => {
   };
 
   return (
-    <div className="Fondo" data-theme='default'>
-      <div className="content-box mx-auto p-4 shadow rounded bg-white bg-opacity-75">
-        <div className="header-with-logo text-center mb-4 d-flex justify-content-center align-items-center gap-3">
-          <form onSubmit={handleLogin}>
-            <div className="form">
-              <div className="form-group text-center">
-                <img src="/src/assets/img/logo-easyPark.jpeg" alt="Logo" className="logo" />
-              </div>
-              <div className="form-group text-center mt-3">
-                <span className="spanLog">Login</span>
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  autoComplete="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
+    <div className="Fondo">
+      <div className="content-box">
+        <form onSubmit={handleLogin}>
+          <div className="text-center mb-4">
+            <img 
+              src="/src/assets/img/logo-easyPark.jpeg" 
+              alt="EasyPark Logo" 
+              className="logo" 
+            />
+            <h2 className="spanLog">Iniciar Sesión</h2>
+          </div>
 
-              {/* 🔐 Campo con botón mostrar/ocultar contraseña */}
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <div className="input-group">
-                  <input
-                    type={mostrar ? "text" : "password"}
-                    className="form-control"
-                    id="password"
-                    name="password"
-                    autoComplete="current-password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary"
-                    onClick={() => setMostrar(!mostrar)}
-                  >
-                    {mostrar ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
+          <div className="form-group">
+            <label htmlFor="email">Correo Electrónico</label>
+            <input
+              type="email"
+              className="form-control"
+              autoComplete="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="tu@email.com"
+            />
+          </div>
 
-              <div className="form-group mt-4 text-center">
-                <button type="submit" className="btn btn-primary w-100">Enter</button>
-                <Confirm
-                  type={alertCustom.type}
-                  message={alertCustom.message}
-                  onConfirm={handleCloser}
-                  onClose={handleCloser}
-                />
-              </div>
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <div className="input-group">
+              <input
+                type={mostrar ? "text" : "password"}
+                className="form-control"
+                id="password"
+                name="password"
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setMostrar(!mostrar)}
+                aria-label={mostrar ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {mostrar ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div className="form-group mt-4">
+            <button 
+              type="submit" 
+              className="btn btn-primary w-100 py-2"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Cargando...
+                </>
+              ) : 'Ingresar'}
+            </button>
+          </div>
+
+          <div className="text-center mt-3">
+            <a href="/forgot-password" className="text-decoration-none small text-muted">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+        </form>
+
+        <Confirm
+          type={alertCustom.type}
+          message={alertCustom.message}
+          onConfirm={handleCloser}
+          onClose={handleCloser}
+        />
       </div>
     </div>
   );
