@@ -23,7 +23,7 @@
     overflow: hidden;
     margin: auto;
     max-width: 350px;
-    background-color: rgb(61, 61, 57);
+    background-color: rgb(107, 107, 106);
     box-shadow: 0cqh;
     flex-direction: column;
     width: 100%; /* Hace que el modal ocupe el 100% del ancho de su contenedor padre */

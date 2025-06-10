@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { Alert,Confirm  } from "../components/ModalAlert"; // Ajusta la ruta si es distinta
+
 
 
 export const Comentario= () => {
@@ -13,6 +15,16 @@ export const Comentario= () => {
   const [comentario, setComentario] = useState("");
   const [puntuacion, setPuntuacion] = useState(0);
   const [puedeComentar, setPuedeComentar] = useState(true);
+  const [alerta, setAlerta] = useState({ mostrar: false, tipo: "", mensaje: "" });
+  const [confirmarEnvio, setConfirmarEnvio] = useState(false);
+
+  const mostrarAlerta = (tipo, mensaje) => {
+    setAlerta({ mostrar: true, tipo, mensaje });
+  };
+
+  const cerrarAlerta = () => {
+    setAlerta({ mostrar: false, tipo: "", mensaje: "" });
+  };
 
 useEffect(() => {
     
@@ -40,7 +52,6 @@ useEffect(() => {
       setBusqueda(data.nombre || data.propietario || ""); // Asignar nombre o propietario al campo de búsqueda
       setSeleccionado(data); // debe contener { id, nombre, tipo }
       verificarSiPuedeComentar(localStorage.getItem("iduser"), data.tipo, data.id);
-      setMostrarModal(true);
     } catch (error) {
       console.error("Error buscando por ID:", error);
     }
@@ -53,9 +64,15 @@ useEffect(() => {
 
     const data = await res.json();
     setPuedeComentar(data.puedeComentar);
+    if (data.puedeComentar) {
+        setMostrarModal(true);
+      } else {
+        mostrarAlerta("warning", "Solo puedes comentar si ya has completado una reserva en este lugar.");
+      }
   } catch (error) {
     console.error("Error al verificar permiso para comentar:", error);
     setPuedeComentar(false);
+    mostrarAlerta("error", "Hubo un error al verificar si puedes comentar.");
   }
 };
 
@@ -89,10 +106,10 @@ useEffect(() => {
   const token = localStorage.getItem("easypark_token");
 
   // Validar que haya un seleccionado
-  if (!seleccionado) {
-    alert("Debe seleccionar un parqueo primero.");
-    return;
-  }
+ if (!seleccionado) {
+  mostrarAlerta("warning", "Debe seleccionar un parqueo primero.");
+  return;
+}
 
   // Construir el body dinámicamente
   const body = {
@@ -107,7 +124,7 @@ useEffect(() => {
   } else if (seleccionado.tipo === "garaje") {
     body.garaje_id = seleccionado.id;
   } else {
-    alert("Tipo de parqueo desconocido.");
+    mostrarAlerta("error", "Tipo de parqueo desconocido.");
     return;
   }
 
@@ -123,13 +140,13 @@ useEffect(() => {
 
     if (!res.ok) throw new Error("Error al enviar comentario");
 
-    alert("Comentario enviado con éxito.");
+    mostrarAlerta("success", "Comentario enviado con éxito.");
     setMostrarModal(false);
     setComentario("");
     setPuntuacion(0);
   } catch (err) {
     console.error("Error al enviar comentario:", err);
-    alert("Hubo un error al enviar el comentario.");
+    mostrarAlerta("error", "Hubo un error al enviar el comentario.");
   }
 };
 
@@ -156,7 +173,6 @@ useEffect(() => {
             onClick={() => {
               setSeleccionado(est);
               verificarSiPuedeComentar(localStorage.getItem("iduser"), est.tipo, est.id);
-              setMostrarModal(true);
             }}
 
           >
@@ -205,15 +221,23 @@ useEffect(() => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setMostrarModal(false)}>Cancelar</Button>
-          <Button variant="primary" onClick={enviarComentario} disabled={!puedeComentar}>Enviar</Button>
-          {!puedeComentar && (
-            <p className="text-danger mt-2">
-              Solo puedes comentar si ya has completado una reserva en este lugar.
-            </p>
-          )}
-
+          <Button variant="primary" onClick={() => setConfirmarEnvio(true)}>Enviar</Button>
         </Modal.Footer>
       </Modal>
+       {confirmarEnvio && (
+        <Confirm
+          message="¿Estás seguro de enviar este comentario?"
+          onConfirm={() => {
+            setConfirmarEnvio(false);
+            enviarComentario();
+          }}
+          onClose={() => setConfirmarEnvio(false)}
+        />
+      )}
+      {alerta.mostrar && (
+        <Alert type={alerta.tipo} message={alerta.mensaje} onClose={cerrarAlerta} />
+      )}
+
     </div>
   );
 };
