@@ -483,7 +483,10 @@ const body = {
               </div>
               <div className="mt-3 d-flex justify-content-between">
                 <button type="submit" className="btn btn-primary">Buscar</button>
-                <button type="button" className="btn btn-secondary" onClick={() => setShowSearchModal(false)}>Cancelar</button>
+              </div>
+              <div className="mt-3 d-flex justify-content-between">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowSearchModal(false)}>Cancelar</button>
+              
               </div>
             </form>
           </div>

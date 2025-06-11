@@ -115,7 +115,7 @@ export const ParkAdm = () => {
           altura: alturaEspacio,
           anchura: anchuraEspacio,
           disponibilidad,
-          fecha_registro: fechaRegistro,
+          fecha_registro: new Date().toISOString(),
           vehiculos: vehiculos.map(v => ({
             tipo_vehiculo: v.tipo,
             tarifa_hora: v.precio

@@ -7,14 +7,14 @@ export const ModalPrivacidad = ({ show, handleClose }) => (
     <Modal.Header closeButton>
       <Modal.Title>Política de Privacidad</Modal.Title>
     </Modal.Header>
-    <Modal.Body>
-      <p>Tu privacidad es importante:</p>
+    <Modal.Body className="text-justify text-dark">
+      <p className=" text-dark">Tu privacidad es importante:</p>
       <ul>
-        <li>Recolectamos datos como tu nombre y ubicación.</li>
-        <li>No compartimos tu información sin consentimiento.</li>
-        <li>Usamos tus datos para mejorar el servicio.</li>
-        <li>Protegemos tus datos con medidas de seguridad.</li>
-        <li>Puedes solicitar cambios o eliminación de tus datos.</li>
+        <li className=" text-dark">Recolectamos datos como tu nombre y ubicación.</li>
+        <li className=" text-dark">No compartimos tu información sin consentimiento.</li>
+        <li className=" text-dark">Usamos tus datos para mejorar el servicio.</li>
+        <li className=" text-dark">Protegemos tus datos con medidas de seguridad.</li>
+        <li className=" text-dark">Puedes solicitar cambios o eliminación de tus datos.</li>
       </ul>
     </Modal.Body>
     <Modal.Footer>
